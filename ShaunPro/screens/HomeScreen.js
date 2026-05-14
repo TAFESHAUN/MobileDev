@@ -1,23 +1,39 @@
-import { View, StyleSheet} from 'react-native';
-import { Text, Button } from 'react-native-paper';
+import { ScrollView, View, StyleSheet} from 'react-native';
+import { Text, Button, Card } from 'react-native-paper';
+
 
 export default function HomeScreen({ navigation }) {
-    return (
-        <View style={styles.container}>
-            <Text variant='headlineMedium' style={styles.title}>
-                Home Screen Place Holder
-            </Text>
-            <Text variant='bodyLarge' style={styles.subtitle}>
-                Welcome to the homescreen of my app. This is a placeholder Lorium Ipsuim    
-            </Text> 
 
-            <Button
-            textColor='#0f0f0f'
-            style={styles.button}
-            >
-                Placeholder BTN
-            </Button> 
-        </View>
+//Define ARRAY data here
+const DATA = [
+    {id: 1, title: "Placeholder1", description:"Some details here1"},
+    {id: 2, title: "Placeholder2", description:"Some details here2"},
+    {id: 3, title: "Placeholder3", description:"Some details here3"},
+    {id: 4, title: "Placeholder4", description:"Some details here4"},
+    {id: 5, title: "Placeholder5", description:"Some details here5"},
+    {id: 6, title: "Placeholder6", description:"Some details here6"},
+];
+
+    return (
+        <ScrollView style={styles.container}>
+
+        <Text variant='headlineMedium' style={styles.title}>
+            Welcome to Placeholder
+        </Text>
+
+        {DATA.map(item => (
+        <Card
+            key={item.id}
+            style={styles.card}
+            onPress={() => navigation.navigate("Details", { item })}
+        >
+            <Card.Title title={item.title}/>
+                <Card.Content>
+                    <Text variant="bodyMedium">{item.description}</Text>
+                </Card.Content>
+        </Card>
+        ))}
+        </ScrollView>
     );
 }
 
@@ -25,9 +41,7 @@ export default function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignContent: 'center',
-        padding: 24,
+        padding: 15,
         backgroundColor: '#98d6ff'
     },
     title: {
@@ -43,5 +57,9 @@ const styles = StyleSheet.create({
     button: {
         marginTop: 8,
         backgroundColor: '#ed019a',
+    },
+    card: {
+        marginBottom: 12,
+        elevation: 3,
     },
 });
