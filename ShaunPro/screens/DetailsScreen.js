@@ -5,18 +5,35 @@ export default function DetailsScreen({ route, navigation }){
     const { item } = route.params;
 
     return(
-        <View>
-            <Card>
+        <View style={styles.container}>
+            <Card style={styles.card}>
                 <Card.Title title={item.title} subtitle="Detail View"/>
                 <Card.Content>
-                    <Text variant="bodyLarge">
+                    <Text variant="bodyLarge" style={styles.description}>
                         {item.description}
                     </Text>
-                    <Text variant="bodySmall">
+                    <Text variant="bodySmall" style={styles.meta}>
                         ID: {item.id}
                     </Text>
                 </Card.Content>
             </Card>
+            <Button
+                mode="outlined"
+                onPress={() => navigation.goBack()}
+                style={styles.button}
+                textColor="#000000"
+            >
+                Go Back
+            </Button>
+
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+  container:   { flex: 1, padding: 16, backgroundColor: "#f4f4f4" },
+  card:        { marginBottom: 16, elevation: 3 },
+  description: { marginBottom: 8, color: "#ffd771" },
+  meta:        { color: "#999" },
+  button:      { marginTop: 8},
+});

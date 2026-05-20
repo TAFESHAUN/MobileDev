@@ -37,8 +37,17 @@ export default function App() {
               }}
             >
 
-            <Tab.Screen name="Home" component={HomeStack} options={{headerShown: false}} />
-            <Tab.Screen name="Settings" component={SettingsScreen}/>
+            <Tab.Screen name="Home" 
+            component={HomeStack} 
+            options={{headerShown: false}} 
+            />
+            <Tab.Screen name="Settings" 
+            component={SettingsScreen}
+            options={{
+              headerStyle:     { backgroundColor: "#6200ee" },
+              headerTintColor: "#fff",
+            }}
+            />
             
             
             </Tab.Navigator>
