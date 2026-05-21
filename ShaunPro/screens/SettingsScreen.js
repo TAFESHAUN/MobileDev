@@ -10,7 +10,7 @@ export default function SettingsScreen() {
   const theme = {
     bg: darkMode ? '#121212' : '#ffffff',
     text: darkMode ? '#ffffff' : '#000000',
-    title: darkMode ? '#e200a6' : '#e200a6',
+    title: darkMode ? '#f2f06f' : '#e200a6',
     subtext: darkMode ? '#686868' : '#777777',
   };
 

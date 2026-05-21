@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import { ScrollView, View, StyleSheet} from 'react-native';
-import { Text, Button, Card } from 'react-native-paper';
+import { Text, Button, Card, ActivityIndicator } from 'react-native-paper';
 
 
 export default function HomeScreen({ navigation }) {
@@ -14,22 +15,57 @@ const DATA = [
     {id: 6, title: "Placeholder6", description:"Some details here6"},
 ];
 
+//Remote data here
+const [events, setEvents] = React.useState([]);
+const [loading, setLoading] = React.useState(false); //Add cool spin animation part2
+const [error, setError] = React.useState('');
+
+const EVENTS_URL = 'https://tafeshaun.github.io/elevate-data/events.json';
+
+const loadEvents = async () => {
+    try{
+        setLoading(true);
+        setError('');
+        const response = await fetch(EVENTS_URL);
+        if(!response.ok){
+            throw new error('Network response failed. Panic!')
+        }
+        const data = await response.Text();
+        setEvents(data);
+    }
+    catch (e){
+        setError('Could not load any events. Check git connection and maybe panic more');
+        console.error(e);
+    }
+    finally {
+        setLoading(false);
+    }
+ 
+}
+
+React.useEffect(() => {
+    loadEvents();
+}, []);
+
     return (
         <ScrollView style={styles.container}>
 
         <Text variant='headlineMedium' style={styles.title}>
-            Welcome to Placeholder
+            Welcome to Events
         </Text>
 
-        {DATA.map(item => (
+        {/* ADD ERROR MSG HERE FOR LATER TESTING */}
+        {!!error && <Text style={{color: '#ff0000'}}>{error}</Text>}
+
+        {events.map(event => (
         <Card
-            key={item.id}
+            key={String(event.id)}
             style={styles.card}
-            onPress={() => navigation.navigate("Details", { item })}
+            onPress={() => navigation.navigate("Details", { event })}
         >
-            <Card.Title title={item.title}/>
+            <Card.Title title={event.title}/>
                 <Card.Content>
-                    <Text variant="bodyMedium">{item.description}</Text>
+                    <Text variant="bodyMedium">{event.description}</Text>
                 </Card.Content>
         </Card>
         ))}
