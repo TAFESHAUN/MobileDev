@@ -7,16 +7,24 @@ export default function SettingsScreen() {
   const [notificationsOn, setNotificationsOn] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
 
+  const theme = {
+    bg: darkMode ? '#121212' : '#ffffff',
+    text: darkMode ? '#ffffff' : '#000000',
+    title: darkMode ? '#e200a6' : '#e200a6',
+    subtext: darkMode ? '#686868' : '#777777',
+  };
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.bg }]}>
       <Text variant="headlineMedium" style={styles.title}>
         Settings
       </Text>
 
       <List.Item
         title="Notifications"
-        titleStyle={{color:'#000000'}}
+        titleStyle={{ color: theme.title }}
         description={notificationsOn ? "NotifyOn" : "NotifyOff"}
+        descriptionStyle={{ color: theme.subtext }}
         right = { () => (
           <Switch
             value ={notificationsOn}
@@ -27,13 +35,14 @@ export default function SettingsScreen() {
 
       <Divider />
 
-      <List.Item 
-        title= "Dark Mode"
-        titleStyle={{color:'#c900a7'}}
+      <List.Item
+        title="Dark Mode"
+        titleStyle={{ color: theme.title }}
         description={darkMode ? "On" : "Off"}
-        right = { () => (
+        descriptionStyle={{ color: theme.subtext }}
+        right={() => (
           <Switch
-            value ={darkMode}
+            value={darkMode}
             onValueChange={setDarkMode}
           />
         )}
