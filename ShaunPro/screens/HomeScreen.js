@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React from 'react'; //Import useEffect and usestate
 import { ScrollView, View, StyleSheet} from 'react-native';
 import { Text, Button, Card, ActivityIndicator } from 'react-native-paper';
 
@@ -28,9 +28,11 @@ const loadEvents = async () => {
         setError('');
         const response = await fetch(EVENTS_URL);
         if(!response.ok){
-            throw new error('Network response failed. Panic!')
+            throw new Error('Network response failed. Panic!')
         }
-        const data = await response.Text();
+        const text = await response.text();
+        const cleaned = text.replace(/^\uFEFF/, ''); //Clean
+        const data = JSON.parse(cleaned);
         setEvents(data);
     }
     catch (e){
@@ -57,13 +59,17 @@ React.useEffect(() => {
         {/* ADD ERROR MSG HERE FOR LATER TESTING */}
         {!!error && <Text style={{color: '#ff0000'}}>{error}</Text>}
 
+        {/* Add cool spin animation part2 */}
+        {loading && <ActivityIndicator animating size="large" style={{ marginTop: 80 }} />}
+
         {events.map(event => (
         <Card
             key={String(event.id)}
             style={styles.card}
-            onPress={() => navigation.navigate("Details", { event })}
+            onPress={() => navigation.navigate("Details", { item: event })} //PARAMS!
         >
-            <Card.Title title={event.title}/>
+            {/* Added subtitle to show date field from the remote JSON */}
+            <Card.Title title={event.title} subtitle={event.date}/>
                 <Card.Content>
                     <Text variant="bodyMedium">{event.description}</Text>
                 </Card.Content>
