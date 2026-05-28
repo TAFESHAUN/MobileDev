@@ -2,9 +2,12 @@ import React from 'react'; //Import useEffect and usestate
 import AsyncStorage  from '@react-native-async-storage/async-storage';
 import { ScrollView, View, StyleSheet} from 'react-native';
 import { Text, Button, Card, ActivityIndicator } from 'react-native-paper';
+import { useAppTheme } from '../App';
 
 
 export default function HomeScreen({ navigation }) {
+
+const homeTheme = useAppTheme();
 
 //Define ARRAY data here
 const DATA = [
@@ -68,9 +71,9 @@ React.useEffect(() => {
 }, []);
 
     return (
-        <ScrollView style={styles.container}>
+        <ScrollView style={[styles.container, {backgroundColor: homeTheme.bg}]}>
 
-        <Text variant='headlineMedium' style={styles.title}>
+        <Text variant='headlineMedium' style={[styles.title, {color: homeTheme.titleColor}]}>
             Welcome to Events
         </Text>
 
