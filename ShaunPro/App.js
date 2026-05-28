@@ -34,6 +34,9 @@ export default function App() {
                 tabBarInactiveTintColor: '#999',
                 headerStyle: {backgroundColor: '#6200ee'},
                 headerTintColor: '#fff',
+                tabBarStyle: {
+                height: 55,           
+                },
               }}
             >
 

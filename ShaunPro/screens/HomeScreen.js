@@ -1,4 +1,5 @@
 import React from 'react'; //Import useEffect and usestate
+import AsyncStorage  from '@react-native-async-storage/async-storage';
 import { ScrollView, View, StyleSheet} from 'react-native';
 import { Text, Button, Card, ActivityIndicator } from 'react-native-paper';
 
@@ -21,6 +22,7 @@ const [loading, setLoading] = React.useState(false); //Add cool spin animation p
 const [error, setError] = React.useState('');
 
 const EVENTS_URL = 'https://tafeshaun.github.io/elevate-data/events.json';
+const EVENT_KEY = 'cached events';
 
 const loadEvents = async () => {
     try{
@@ -30,10 +32,11 @@ const loadEvents = async () => {
         if(!response.ok){
             throw new Error('Network response failed. Panic!')
         }
-        const text = await response.text();
-        const cleaned = text.replace(/^\uFEFF/, ''); //Clean
-        const data = JSON.parse(cleaned);
+        const responseText = await response.text();
+        const cleanedResponse = responseText.replace(/^\uFEFF/, ''); //Clean
+        const data = JSON.parse(cleanedResponse);
         setEvents(data);
+        await AsyncStorage.setItem(EVENT_KEY, JSON.stringify(data));
     }
     catch (e){
         setError('Could not load any events. Check git connection and maybe panic more');
@@ -45,8 +48,23 @@ const loadEvents = async () => {
  
 }
 
+//Aysnc Call if load fails > Cache first
+const loadCached = async () => {
+    try{
+        const rawEvent = await AsyncStorage.getItem(EVENT_KEY);
+        if(rawEvent)
+        {
+            setEvents(JSON.parse(rawEvent))
+        }
+    }
+    catch (e){
+        console.warn('Failed to load cached event data', e);
+    }
+};
+
 React.useEffect(() => {
-    loadEvents();
+    loadCached(); //CACHED DATA
+    loadEvents(); // REMOTE DATA
 }, []);
 
     return (
