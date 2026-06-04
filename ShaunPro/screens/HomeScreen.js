@@ -25,7 +25,7 @@ const [loading, setLoading] = React.useState(false); //Add cool spin animation p
 const [error, setError] = React.useState('');
 
 const EVENTS_URL = 'https://tafeshaun.github.io/elevate-data/events.json';
-const EVENT_KEY = 'cached events';
+const EVENT_KEY = 'cached_events';
 
 const loadEvents = async () => {
     try{

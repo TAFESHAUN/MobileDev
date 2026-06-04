@@ -7,6 +7,7 @@ import React, { createContext, useContext} from 'react'
 import HomeScreen from "./screens/HomeScreen";
 import DetailsScreen   from "./screens/DetailsScreen";
 import SettingsScreen from "./screens/SettingsScreen";
+import TestScreen from './screens/TestScreen';
 
 
 const Tab = createBottomTabNavigator();
@@ -14,6 +15,7 @@ const Stack = createNativeStackNavigator();
 
 export const appTheme = {
   bg: '#55a2f6',
+  test: 'rgb(71, 152, 113)',
   cardBg: '#313131',
   headerBg: '#fac83f',
   headerTint: '#008cff',
@@ -71,6 +73,10 @@ export default function App() {
               <Tab.Screen name="Home" 
               component={HomeStack} 
               options={{headerShown: false}} 
+              />
+              <Tab.Screen name='Test' 
+              component={TestScreen} 
+              options={{ title: 'Test' }} 
               />
               
               

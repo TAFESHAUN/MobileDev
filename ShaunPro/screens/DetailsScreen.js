@@ -1,11 +1,13 @@
 import {View, StyleSheet} from "react-native";
 import { Text, Card, Button } from "react-native-paper";
+import { useAppTheme } from "../App";
 
 export default function DetailsScreen({ route, navigation }){
     const { item } = route.params;
+    const theme = useAppTheme();
 
     return(
-        <View style={styles.container}>
+        <View style={styles.container, {backgroundColor: theme.cardBg}}>
             <Card style={styles.card}>
                 <Card.Title title={item.title} subtitle="Detail View"/>
                 <Card.Content>
@@ -21,7 +23,7 @@ export default function DetailsScreen({ route, navigation }){
                 mode="outlined"
                 onPress={() => navigation.goBack()}
                 style={styles.button}
-                textColor="#000000"
+                textColor="#c5c3c3"
             >
                 Go Back
             </Button>
